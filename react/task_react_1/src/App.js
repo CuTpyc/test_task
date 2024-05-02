@@ -1,32 +1,6 @@
+import React, { useState } from 'react';
 import './App.css';
-
-import React, { useState, useEffect } from 'react';
-import './MyModal.css';
-
-const MyModal = ({ open, disableGlobalScroll, children }) => {
-  const [prevOverflow, setPrevOverflow] = useState('');
-
-  useEffect(() => {
-    if (disableGlobalScroll && open) {
-      setPrevOverflow(document.body.style.overflow);
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      if (disableGlobalScroll) {
-        document.body.style.overflow = prevOverflow;
-      }
-    };
-  }, [open, disableGlobalScroll, prevOverflow]);
-
-  return (
-    <div className={`modal ${open ? 'open' : ''}`}>
-      <div className="modal-content">
-        {children}
-      </div>
-    </div>
-  );
-};
+import MyModal from './components/Modal';
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -40,10 +14,7 @@ function App() {
           <button onClick={() => setOpen(false)}>Close</button>
         </div>
       </MyModal>
-
     </div>
-
-
   );
 }
 
