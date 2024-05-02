@@ -27,7 +27,7 @@ const CensoredText = ({ badWords, children }) => {
 };
 
 function App() {
-  const badWords = ['text', 'someBadWord'];
+  const badWords = ['test', 'someBadWord'];
   const someText = 'Very ,long text who contains ?someBadWord and testWord';
   return (
     <div>
