@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Product {
+  id         Int               @id @default(autoincrement())
+  sku        String            @unique
+  title      String
+  categories ProductCategory[]
+  stock      ProductStock[]
+}
+
+model Category {
+  id       Int               @id @default(autoincrement())
+  slug     String            @unique
+  title    String
+  products ProductCategory[]
+}
+
+model Stock {
+  id       Int            @id @default(autoincrement())
+  uuid     String         @unique
+  title    String
+  products ProductStock[]
+}
+
+model ProductCategory {
+  product    Product  @relation(fields: [productId], references: [sku])
+  category   Category @relation(fields: [categoryId], references: [slug])
+  productId  String
+  categoryId String
+
+  @@id([productId, categoryId])
+}
+
+model ProductStock {
+  product   Product @relation(fields: [productId], references: [sku])
+  stock     Stock   @relation(fields: [stockId], references: [uuid])
+  productId String
+  stockId   String
+  quantity  Int
+
+  @@id([productId, stockId])
+}
